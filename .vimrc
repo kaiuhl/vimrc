@@ -24,8 +24,8 @@ set shiftwidth=2
 set tabstop=2
 set number
 set noswapfile
-set showtabline=0
-set colorcolumn=90
+set showtabline=1
+set colorcolumn=100
 set ignorecase
 set hlsearch
 set updatetime=1000
@@ -34,6 +34,7 @@ set nowrap
 set guioptions=
 set fillchars=vert:\ 
 set splitright
+set autoindent
 set noexpandtab "tabs, sigh
 
 
@@ -61,8 +62,18 @@ set laststatus=2
 " Code Navigation
 "
 
+" Adjust vertical split sizing
+noremap <c-s-left> :vertical resize -10<cr>
+noremap <c-s-right> :vertical resize +10<cr>
+
 " Jump between current file and previously edited
 nnoremap <leader><leader><leader> :b#<cr>
+
+" Move lines of code up and down
+vnoremap - dpV`]
+vnoremap + dkPV`]
+nnoremap - ddp
+nnoremap + ddkP
 
 " Unhighlight all instances of search term by pressing enter
 noremap <cr> :nohlsearch<cr>
@@ -70,10 +81,6 @@ noremap <cr> :nohlsearch<cr>
 " Jump to beginning of line, end of line
 noremap H ^
 noremap L $
-
-" Move lines of code up and down
-nnoremap - ddp
-nnoremap + ddkP
 
 " Jump to matching paren or brace
 noremap <leader>] %
@@ -131,12 +138,13 @@ let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'passive_filetypes': [] }
 
 let g:syntastic_html_checkers=['']
+let g:syntastic_loc_list_height = 3
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
@@ -210,10 +218,6 @@ autocmd BufWritePre *.rb,*.html,*.erb,*.css,*.scss,*.sass,*.js,*.coffee,*.hbs :%
 
 " Jump to last line when opening a file
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-" Always show the file browser
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close vim if the last buffer is the file browser
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
