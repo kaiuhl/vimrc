@@ -55,6 +55,7 @@ set guifont=LetterGothicMono\ Light:h15
 colorscheme kyle
 let macvim_skip_colorscheme=1
 let g:airline_theme = 'distinguished'
+let g:airline_extensions = []
 set laststatus=2
 
 
@@ -100,6 +101,7 @@ nmap <leader>v :vsplit<cr><c-l><leader><leader><leader><c-h>
 
 " Find the alternate file for the current path and open it
 nnoremap <leader>a :w<cr>:call AltCommand(expand('%'), ':e')<cr>
+nnoremap <leader>av :w<cr>:call AltCommand(expand('%'), ':vsplit')<cr>
 
 " use emacs-style tab completion when selecting files, etc
 set wildmode=list
@@ -169,7 +171,8 @@ map <D-/> <leader>c<space>
 " Shell command mappings
 "
 
-" RSpec.vim mappings
+" RSpec.vim 
+let g:rspec_runner = "os_x_iterm2"
 noremap <leader>rs :call RunNearestSpec()<cr>
 noremap <leader>rf :call RunCurrentSpecFile()<cr>
 noremap <leader>r :call RunAllSpecs()<cr>
