@@ -51,11 +51,11 @@ nnoremap <leader><leader>vs :source ~/.vimrc<cr>
 "
 
 set listchars=tab:..,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-set guifont=LetterGothicMono\ Light:h15
+set guifont=Hack:h14
 colorscheme kyle
 let macvim_skip_colorscheme=1
-let g:airline_theme = 'distinguished'
-let g:airline_extensions = []
+let g:airline_theme = 'wombat'
+let g:airline_powerline_fonts = 1
 set laststatus=2
 
 
@@ -128,8 +128,11 @@ let g:ctrlp_max_files = 99999
 nmap <D-O> <c-p>
 
 " NERDTree configuration
+let loaded_netrw = 0
 let g:NERDTreeChDirMode = 2
+let g:NERDTreeWinSize=25
 let NERDTreeMinimalUI = 1
+let NERDTreeHijackNetrw = 0
 let NERDTreeDirArrows = 1
 noremap <c-o> :NERDTreeToggle<cr>
 noremap <c-f> :NERDTreeFind<cr>
@@ -213,6 +216,9 @@ endfunction
 " Auto commands
 "
 
+" Open NerdTree automatically
+autocmd VimEnter *  NERDTree
+
 " Resize splits automatically when the window is resized
 autocmd VimResized * wincmd =
 
@@ -225,6 +231,8 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 " Close vim if the last buffer is the file browser
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Always tabs, you jerk ruby.vim
+autocmd FileType ruby setlocal noexpandtab
 
 """"""""""
 " Plug.vim plugins
